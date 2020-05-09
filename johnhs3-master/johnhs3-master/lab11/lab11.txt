@@ -1,0 +1,30 @@
+Question 1: Describe the errors that occur when trying to assemble lab11.asm. Identify the cause of each error.
+					Errors preventing Assembly:
+
+Line 14: illegal operands for missing opcode	<--Forgot to include .ORIG pseudo-op before x3000
+Line 16: instruction appears before .ORIG		<--1st inst., LD. Of course this is the case, because there is no .ORIG!!!
+Line 17: constant outside of allowed range	<--They are attempting to load into R2 with an offset address that is WAAAY outof the range of 9 bits. So, obviously, this can't be computed by assembler.
+Line 19: illegal operands for ADD 	<--They did a typo w/ a double comma, making the assembler think there's an operand between R3 (DR) and R3 (SR1), deeming the R2 "unnecessary"
+Line 30: constant outside of allowed range	<-- Once again, they are entering a 16-bit value for an offset w/ a max of 9 bits. Perhaps they think that you're supposed to just enter the target memory address, which is why they put x30FF instead of the offset to get to x30FF???
+Line 32: label OUTERLOOP has already appeared		<-- They wrote "BRpz" instead of "BRzp"
+Line 40: contains unrecognizable characters 	<-- They just left a bunch of x's for the memory address instead of inserting the valid location to store the result, that is RESULT. 
+Line 41: no .END directive found	<-- Pretty self-explanatory. They forgot .END
+BIG OVERSIGHT: They didn't initialize all the registers, but used some, so I went thru and initialized them all.
+
+Question 2: For each label in the code, write down the corresponding memory location. 
+
+OUTERLOOP --> x3009
+INNERLOOP --> x300A
+INPUT	--> x3013
+INIT0	--> x3014		; (I use INIT0 to initialize register to 0,
+INITF	--> x3015		;       and INITF to init to -1. )
+RESULT	--> x3016
+
+
+Question 3: Between using labels and explicit memory locations/offsets, which one makes the most sense, and why?
+
+If we're talking about the abstract here, and simply trying to make functional programs without wanting to think about actual concrete locations in memory (which are a pain, we already know about them, so why would we?), then labels make a lot more sense.
+
+Concretely, it is much easier to just reference a label when u want to Load or store something from a memory location, or do a Branch and jump to another location in memory, instead of calculating the offset explicitly. You can even reference something before you've coded that section!!! Super Cool and allows for quicker coding!
+Additionally, Labels allow you to impart a sense of meaning or structure to your program. By choosing the appropriate labels, you can make it more clear what is going on.
+Finally, labels are much more "durable" than PC+offset relative stuff. With labels, you can freely change your code around without worrying: adding, deleting lines, etc. As long as the labels themselves remain intact it's all good. However, doing any of these things with PC relative would be a HUGE PAIN... you'd have to change all your offsets if u make a change to the pgrm.

@@ -1,0 +1,9 @@
+QUESTION 1.  Read through the program lab9.bin. What do you expect the program to do? More specifically, which register will the program modify when it is run, and what will it contain when the program finishes? (You can probably figure this out merely by reading the comments provided in lab9.bin.)
+
+ANSWER: This LC3 Assembly program will first specify where our program is stored in memory, which is at x3000. Then, it will use the AND operation (0101) to read from R2 and write to R2 a bunch of zeroes, so its value is 0. Then, it uses ADD (0001) to add the value 01100 (12 in decimal) to R2. Then, it uses TRAP (1111) to end the program.
+
+
+QUESTION 2.  Explain in a few sentences why the ability to step through a program (run one instruction at a time) is a very useful tool for debugging a program. Debugging is the process of finding and correcting bugs (or errors) in a program. Hint: Finding a bug is often much more difficult than correcting it.
+
+ANSWER: Being able to "step" through a program is SUPER useful for debugging because it allows us to code trace, IN REAL TIME, what is happening with our program in both memory and in the registers. Suppose that we have a program with a lot of branching paths or complicated control structures, that write different values to different registers based on whether a certain condition is met, or something... To be able to step through the program at HUMAN PACE is a great way to be able to check for tricky logic errors, you can "run" the program at the same pace as the machine and see where any discrepancies arise.
+
