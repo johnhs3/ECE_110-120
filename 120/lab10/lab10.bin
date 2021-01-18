@@ -1,0 +1,28 @@
+;-----------------POSITIVE NUMBER SUMMATION PROGRAM----------------------
+;	by John H Smith,     Netid: johnhs3	  Date: April 15, 2020
+;
+;Desc.: The purpose of this LC3 binary pgrm is to take the sum of ONLY positive
+;#'s in a string of 10 #'s and store the result in R5.
+;Sequentially loads 10 contiguous MEM addresses, starting at x3132, and,
+;if it's positive, adds it to the result, using loops and pointers.
+;
+;R5 holds result of sum
+;R3 holds pointer for number MEM addresses, which is incremented repeatedly
+;R4 holds counter init'ized to 10, counts down to 0
+;R1 is "scratch space" for evaluating each result.
+
+0011 0001 0000 0000 ; x3100 - starting address of the program
+1110 011 000110001 	; R3 <- PC + x31	loads address of first # into R3 ???DEBUG!!
+0101 101 101 1 00000	; R5 <- R5 & #0		inits R5 to 0
+0001 100 101 1 01010	; R4 <- R5 + #10	init's R4 to value 10 (counter)
+0110 001 011 000000	; R1 <- mem[R3+00000] 	loads # at addr in R3 to R1
+0000 110 000000001	; if nz, PC <- PC + 1	checks for non-pos #; skips next line
+0001 101 101 0 00 001	; R5 <- R5 + R1		ADD current R5 + R1 to R5 ??? THIS RIGHT?
+0001 011 011 1 00001	; R3 <- R3 + #1		increments mem index
+0001 100 100 1 11111	; R4 <- R4 + #-1	decrements counter
+0000 001 111111010	; if p, PC <- PC + #-6	if >0, loops back to loading new val into R1
+1111 0000 00011001	; TRAP #25		(HALTS THE PROGRAM)
+
+;End of program
+
+
